@@ -18,8 +18,9 @@ router.get('/allUsers', auth, userCtrl.getAllUsers);
 
 // search users by keyword
 router.post('/searchUsers', auth, userCtrl.searchUsers);
-module.exports = router;
 
 // delete user
 router.delete('/delete/:id', auth, userCtrl.delete);
+
+module.exports = router;
 

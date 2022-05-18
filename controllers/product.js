@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Product = require('../models/product');
+const Category = require('../models/category');
 
 const fs = require('fs');
 
@@ -43,8 +44,22 @@ const fs = require('fs');
       });
       // save the product
 
-      newProduct.save().then((d) => {
-        newCategory.save().then((c) =>{
+      newProduct.save(function(err) {
+        if (err) {
+          Category.find({title: newCategory.title}).then(
+            c => {newProduct.categoryId=c._id;}
+          )
+         // return res.json({success: false, msg: 'Product already exists with same title'}); //If category exists already
+          
+        }
+      })
+      .then((d) => {
+        newCategory.save(function(err) {
+          if (err) {
+            return res.json({success: false, msg: 'Product already exists with same title'}); //If category exists already
+          }
+        } 
+        ).then((c) =>{
           res.json({success: true, msg: 'Successful created new product and category in same time.',data:d});  //creation successfull
         });
       });

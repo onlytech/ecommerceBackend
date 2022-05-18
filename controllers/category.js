@@ -50,6 +50,22 @@ exports.getAllCategories = (req, res, next) => {
   })
   };
 
+  exports.deleteCategory = (req, res, next) => {
+    var token = req.headers.authorization.split(' ');
+    var decoded = jwt.verify(token[1], 'RANDOM_TOKEN_SECRET');
+    //console.log(decoded.role);
+    if(decoded.role=='admin'){
+    const filter = { _id: req.params.id };
+    Category.findOneAndDelete(filter).then((category) => {
+        
+        res.status(200).json({success: true, msg: 'Successful delete category',dataDeleted : product});  
+     }
+    ).catch((error,)=>{
+        res.status(400).json({success:false, msg: 'Failed to delete category', error:error});
+    })
+   }
+  }
+
 
 
 
