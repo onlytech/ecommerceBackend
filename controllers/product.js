@@ -146,6 +146,18 @@ exports.getAllProducts = (req, res, next) => {
   })
 };
 
+// get products by Category
+exports.getProductsByCategory = (req, res, next) => {
+  Product.find({categoryId: req.params.id}).then(products => {
+    res.send(products);
+  }).catch(err => {
+    console.log('ERROR', err)
+    res.status(401).json({
+      error: err
+    });
+  })
+};
+
 // delete product
 exports.deleteProduct = (req, res, next) => {
   var token = req.headers.authorization.split(' ');

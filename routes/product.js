@@ -17,6 +17,9 @@ router.put('/updateProduct/:id', auth, productCtrl.updateProduct);
 // Get all Products
 router.get('/getAllProducts', productCtrl.getAllProducts);
 
+// Get Products By Category
+router.get('/getProductsCategory/:id', productCtrl.getProductsByCategory);
+
 // delete product
 router.delete('/deleteProduct/:id', auth, productCtrl.deleteProduct);
 
