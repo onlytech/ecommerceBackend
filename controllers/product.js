@@ -20,7 +20,8 @@ exports.addProduct = (req, res, next) => {
     description: req.body.description,
     price: req.body.price,
     categoryId: req.body.categoryId,
-    picture: pictures
+    picture: pictures,
+    stock: stock,
   });
   // save the product
   console.log(pictures);
@@ -53,7 +54,8 @@ exports.addProductAndCategroy = (req, res, next) => {
         title: req.body.title,
         description: req.body.description,
         price: req.body.price,
-        categoryId: categoryId 
+        categoryId: categoryId,
+        stock: stock 
       });
       newProduct.save().then((p) => {
         console.log("product 9bal mansajlou",p);
@@ -72,7 +74,8 @@ exports.addProductAndCategroy = (req, res, next) => {
         title: req.body.title,
         description: req.body.description,
         price: req.body.price,
-        categoryId: categoryId 
+        categoryId: categoryId,
+        stock: stock  
       });
       newProduct.save().then((p) => {
         console.log("product 9bal mansajlou",p);
@@ -146,9 +149,51 @@ exports.getAllProducts = (req, res, next) => {
   })
 };
 
+// get all products
+
+exports.getAllProductsPagination = async (req, res) => {
+  var pageNo = parseInt(req.query.pageNo);
+  var size = parseInt(req.query.size);
+  var query = {}
+  if (pageNo < 0 || pageNo === 0) {
+    response = { "error": true, "message": "invalid page number, should start with 1" };
+    return res.json(response)
+  }
+  query.skip = size * (pageNo - 1)
+  query.limit = size
+  Product.count({}, function (err, totalCount) {
+    if (err) {
+      response = { "error": true, "message": "Error fetching data" }
+    }
+    Product.find({}, {}, query, function (err, data) {
+      // Mongo command to fetch all data from collection.
+      if (err) {
+        response = { "error": true, "message": "Error fetching data" };
+      } else {
+        var totalPages = Math.ceil(totalCount / size)
+        response = { "error": false, "products": data, "pages": totalPages, "total": totalCount, "pageIndex": pageNo };
+      }
+      res.json(response);
+    }).populate('categoryId');
+  })
+};
+
 // get products by Category
 exports.getProductsByCategory = (req, res, next) => {
-  Product.find({categoryId: req.params.id}).then(products => {
+  var category;
+  var category_id;
+    Category.findOne({title: req.body.title}).then(c => {
+    category = c;
+    category_id = c._id.valueOf();
+  }).catch(err => {
+    console.log('ERROR', err)
+    res.status(401).json({
+      error: err
+    });
+  })
+  Product.find({categoryId:category_id}).then(products => {
+
+    
     res.send(products);
   }).catch(err => {
     console.log('ERROR', err)

@@ -17,8 +17,13 @@ router.put('/updateProduct/:id', auth, productCtrl.updateProduct);
 // Get all Products
 router.get('/getAllProducts', productCtrl.getAllProducts);
 
+// Get all Products with Pagination
+//http://localhost:3000/api/getAllProductsPagination?pageNo=3&size=2
+
+router.get('/getAllProductsPagination', productCtrl.getAllProductsPagination);
+
 // Get Products By Category
-router.get('/getProductsCategory/:id', productCtrl.getProductsByCategory);
+router.post('/getProductsCategory', productCtrl.getProductsByCategory);
 
 // delete product
 router.delete('/deleteProduct/:id', auth, productCtrl.deleteProduct);

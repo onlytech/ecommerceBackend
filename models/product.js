@@ -21,6 +21,10 @@ var ProductSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category"
   },
+  stock: {
+    type: Number,
+    default :0
+  },
   status: {
     type: String,
     default: "1"

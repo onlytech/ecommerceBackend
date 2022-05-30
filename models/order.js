@@ -8,10 +8,15 @@ var OrderSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User"
   },
-  products:[{
+  products:[
+  {
+    product:{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product"
-  }],
+    },
+    quantity : Number
+}
+],
   
  created_at: {
     type: Date,
