@@ -5,7 +5,11 @@ var ordersCtrl = require('../controllers/order');
 
 
 // Add Order
-router.post('/addOrder',auth, ordersCtrl.addOrder);
+router.post('/addOrder', ordersCtrl.addOrder);
+// edit Order
+router.post('/updateOrder', ordersCtrl.updateOrder);
+// Orders list
+router.post('/ordersList', ordersCtrl.ordersList);
 
 
 module.exports = router;

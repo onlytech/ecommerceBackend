@@ -14,7 +14,7 @@ router.post('/login', userCtrl.login);
 router.put('/update/:id', auth, userCtrl.update);
 
 // get all users (role = user)
-router.get('/allUsers', auth, userCtrl.getAllUsers);
+router.get('/allUsers',  userCtrl.getAllUsers);
 
 // search users by keyword
 router.post('/searchUsers', auth, userCtrl.searchUsers);

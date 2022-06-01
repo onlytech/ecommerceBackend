@@ -14,7 +14,10 @@ var OrderSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product"
     },
-    quantity : Number
+    qte : {
+      type: Number,
+      default: 0
+    }
 }
 ],
   

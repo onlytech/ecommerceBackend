@@ -101,6 +101,7 @@ exports.updateProduct = async (req, res, next) => {
     description: req.body.description,
     price: req.body.price,
     categoryId: req.body.categoryId,
+    stock: req.body.stock,
   };
 
   Product.findOneAndUpdate(filter, update).then((product) => {
