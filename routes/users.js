@@ -22,5 +22,10 @@ router.post('/searchUsers', auth, userCtrl.searchUsers);
 // delete user
 router.delete('/delete/:id', auth, userCtrl.delete);
 
+// reset user password
+router.post('/resetPassword', userCtrl.resetPassword);
+// confirm reset user password
+router.post('/password-reset/:userId/:token', userCtrl.newPassword);
+
 module.exports = router;
 
